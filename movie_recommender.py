@@ -64,30 +64,38 @@ def getDistance(movieIndex, train): #, train
     return distance
 
 def evaluateAlgorithm(test, k, movieIndex):
-    #distance = []
-    #count = 0
-    #wCount = 0
-    #mCount = 0
-    #for i in range(len(array_ratings_np)):
-        # = test[i]
+    
     distance = getDistance(movieIndex, array_ratings_np) #, train
     distance.sort()
 	
-    prediction = getPrediction(distance, k)
-    print(prediction)
+    for i in range(k+1):
+      print(i+1, end='')
+      print(distance[i][1], end='')
+      print(' with a distance of ', end='')
+      print(distance[i][0])
+	#prediction = getPrediction(distance, k)
+    #print(prediction)
     
 
 import string
-movieName = string.capwords(input('enter a movie name (eg Die Hard 2) '))
+movieName = input('enter a movie name (eg Die Hard 2) ') #string.capwords()
 year = input('enter release year of that movie (eg 1990) ')
 test = movieName + ' (' + year + ')'
 
-k = int(input('expected number of recommendations '))
 
 #movieId = movies[movies['movieId'] == test].iloc[0]['movieid']
 
-print(movies.index[movies['title'] == test].tolist()[0])
+#print(movies.index[movies['title'] == test].tolist()[0])
 
-movieIndex = movies.index[movies['title'] == test].tolist()[0] #movies[movies['title'] == test].to_numpy()
-#print(movieIndex)
+#movieIndex = movies.index[movies['title'] == test].tolist()[0] #movies[movies['title'] == test].to_numpy()
+
+try:
+  movieIndex = movies.index[movies['title'] == test].tolist()[0] #movies[movies['title'] == test].to_numpy()
+except:
+  print('not found in the dataaset.\ncorrect spelling or release year')
+  exit(0)
+
+
+k = int(input('expected number of recommendations '))
+print(movieIndex)
 evaluateAlgorithm(test, k, movieIndex)
